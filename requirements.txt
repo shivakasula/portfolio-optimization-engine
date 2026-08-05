@@ -7,3 +7,5 @@ cvxpy
 matplotlib
 reportlab
 python-dotenv
+streamlit
+plotly
