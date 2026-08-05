@@ -11,23 +11,20 @@ from datetime import datetime
 from io import BytesIO
 from scipy.optimize import minimize
 
-# Add src to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
-
-from data import load_cached_data, compute_stats, fetch_all_data, TICKERS
-from black_litterman import (
+from src.data import load_cached_data, compute_stats, fetch_all_data, TICKERS
+from src.black_litterman import (
     build_view_matrices,
     black_litterman_posterior,
     market_implied_returns,
 )
-from optimization import (
+from src.optimization import (
     efficient_frontier,
     compute_sharpe_ratio,
     compute_portfolio_return,
     compute_portfolio_vol,
 )
-from optimization_constrained import constrained_optimal_portfolio
-from backtest import backtest_allocation
+from src.optimization_constrained import constrained_optimal_portfolio
+from src.backtest import backtest_allocation
 
 
 # ============================================================================
