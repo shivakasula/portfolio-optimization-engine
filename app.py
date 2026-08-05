@@ -43,7 +43,36 @@ st.markdown(
     "Interactive tool for Markowitz & Black-Litterman portfolio optimization"
 )
 
-# Initialize session state
+
+# ============================================================================
+# AUTO-LOAD DATA WITH CACHING
+# ============================================================================
+
+@st.cache_data(show_spinner=False)
+def load_portfolio_data():
+    """Load portfolio data with Streamlit caching."""
+    return fetch_all_data(use_cache=True)
+
+
+# Auto-load on startup
+if "data_loaded" not in st.session_state:
+    with st.spinner("📊 Loading portfolio data..."):
+        try:
+            (
+                prices, rf_data, annual_returns, cov_matrix, correlation, rf_rate
+            ) = load_portfolio_data()
+            st.session_state.prices = prices
+            st.session_state.rf_data = rf_data
+            st.session_state.annual_returns = annual_returns
+            st.session_state.cov_matrix = cov_matrix
+            st.session_state.correlation = correlation
+            st.session_state.rf_rate = rf_rate
+            st.session_state.data_loaded = True
+        except Exception as e:
+            st.error(f"Error loading data: {e}")
+            st.session_state.data_loaded = False
+
+# Initialize session state (backup)
 if "data_loaded" not in st.session_state:
     st.session_state.data_loaded = False
 if "prices" not in st.session_state:
